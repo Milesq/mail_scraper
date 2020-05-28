@@ -33,13 +33,17 @@ int main(int argc, const char **argv)
         assert(argc == 2, "Program został uruchomiony nieprawidłowo\n\nPrzenieś ikonkę folderu na aplikację");
         string dir = argv[1];
         assert(fs::exists(dir), "Podany folder nie istnieje");
-        assert(fs::is_directory(dir), "Musisz podać folder, nie plik");
 
-        for (auto &p : fs::directory_iterator(dir))
-        {
-            string file = read_file(p.path().string());
-            add_record(file.c_str(), "output.csv", fields, 3);
-        }
+        if (fs::is_regular_file(dir))
+            add_record(read_file(dir).c_str(), "output.csv", fields, 3);
+        else if (fs::is_directory(dir))
+            for (auto &p : fs::directory_iterator(dir))
+            {
+                string file = read_file(p.path().string());
+                add_record(file.c_str(), "output.csv", fields, 3);
+            }
+        else
+            assert(false, "Musisz podać folder albo plik");
     }
     catch (CustomError)
     {
