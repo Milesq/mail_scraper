@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "*.html": "html",
-        "filesystem": "cpp"
+        "filesystem": "cpp",
+        "fstream": "cpp"
     }
 }

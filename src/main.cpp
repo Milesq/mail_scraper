@@ -1,11 +1,17 @@
 #include <windows.h>
-#include <experimental/filesystem>
 #include <fstream>
 
-#include <iostream>
-
 using namespace std;
+
+#if __has_include(<filesystem>)
+#include <filesystem>
+namespace fs = filesystem;
+#elif __has_include(<experimental/filesystem>)
+#include <experimental/filesystem>
 namespace fs = experimental::filesystem;
+#else
+#error "Missing <filesystem>"
+#endif
 
 typedef const char *str;
 
