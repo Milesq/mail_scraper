@@ -30,7 +30,7 @@ int main(int argc, const char **argv)
 
     try
     {
-        assert(argc = 2, "Program został uruchomiony nieprawidłowo\n\nPrzenieś ikonkę folderu na aplikację");
+        assert(argc == 2, "Program został uruchomiony nieprawidłowo\n\nPrzenieś ikonkę folderu na aplikację");
         string dir = argv[1];
         assert(!fs::exists(dir), "Podany folder nie istnieje");
         assert(!fs::is_directory(dir), "Musisz podać folder, nie plik");
