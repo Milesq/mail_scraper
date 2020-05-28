@@ -1,0 +1,12 @@
+[package]
+name = "xlsx_scraper"
+version = "0.1.0"
+authors = ["Milesq <wmilosz88@gmail.com>"]
+edition = "2018"
+
+[lib]
+name = "add_record"
+crate-type = ["dylib"]
+
+[dependencies]
+csv = "1.1.3"
