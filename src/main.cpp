@@ -1,11 +1,11 @@
 #include <windows.h>
-#include <filesystem>
+#include <experimental/filesystem>
 #include <fstream>
 
 #include <iostream>
 
 using namespace std;
-namespace fs = filesystem;
+namespace fs = experimental::filesystem;
 
 typedef const char *str;
 
@@ -32,8 +32,8 @@ int main(int argc, const char **argv)
     {
         assert(argc == 2, "Program został uruchomiony nieprawidłowo\n\nPrzenieś ikonkę folderu na aplikację");
         string dir = argv[1];
-        assert(!fs::exists(dir), "Podany folder nie istnieje");
-        assert(!fs::is_directory(dir), "Musisz podać folder, nie plik");
+        assert(fs::exists(dir), "Podany folder nie istnieje");
+        assert(fs::is_directory(dir), "Musisz podać folder, nie plik");
 
         for (auto &p : fs::directory_iterator(dir))
         {
@@ -54,7 +54,7 @@ int main(int argc, const char **argv)
 
 void assert(bool assertion, string msg)
 {
-    if (assertion)
+    if (!assertion)
     {
         MessageBox(NULL, TEXT(msg.c_str()), TEXT("Error"), MB_OK);
         throw CustomError::ASSERTION_ERROR;

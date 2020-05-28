@@ -2,7 +2,7 @@ EXE = add_records.exe
 BIN = build
 
 CC = g++
-CC_ARGS = -std=c++17 -Wall
+CC_ARGS = -std=c++17 -Wall -lstdc++fs
 
 DLL_DIR = debug
 
