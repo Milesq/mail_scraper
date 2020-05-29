@@ -1,25 +1,19 @@
 #include <windows.h>
 #include <fstream>
 
-using namespace std;
-
 #if __has_include(<filesystem>)
 #include <filesystem>
-namespace fs = filesystem;
+namespace fs = std::filesystem;
 #elif __has_include(<experimental/filesystem>)
 #include <experimental/filesystem>
-namespace fs = experimental::filesystem;
+namespace fs = std::experimental::filesystem;
 #else
 #error "Missing <filesystem>"
 #endif
 
-typedef const char *str;
+#include "bridge.hpp"
 
-extern "C"
-{
-    void add_record(str code, str file_output, const str *fields, int length);
-    void config();
-}
+using namespace std;
 
 enum CustomError
 {

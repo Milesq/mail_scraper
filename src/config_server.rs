@@ -4,8 +4,9 @@ use std::process::Command;
 pub extern "C" fn config() {
     println!("Server is online");
 
-    Command::new("start")
-        .arg(crate::CONFIG_SERVER_PORT)
+    Command::new("cmd")
+        .args(&["/C", "start"])
+        .arg(format!("http://localhost:{}", crate::CONFIG_SERVER_PORT))
         .output()
         .unwrap();
 }
