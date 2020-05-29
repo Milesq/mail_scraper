@@ -26,7 +26,7 @@ enum CustomError
     FILE_ERROR,
 };
 
-void assert(bool, string);
+void assert(bool, const wchar_t *msg);
 void add_record(string);
 string read_file(string path);
 
@@ -36,9 +36,9 @@ int main(int argc, const char **argv)
 
     try
     {
-        assert(argc == 2, "Program został uruchomiony nieprawidłowo\n\nPrzenieś ikonkę folderu na aplikację");
+        assert(argc == 2, L"Program został uruchomiony nieprawidłowo\n\nPrzenieś ikonkę folderu na aplikację");
         string dir = argv[1];
-        assert(fs::exists(dir), "Podany folder nie istnieje");
+        assert(fs::exists(dir), L"Podany folder nie istnieje");
 
         if (fs::is_regular_file(dir))
             add_record(read_file(dir).c_str(), "output.csv", fields, 3);
@@ -49,7 +49,7 @@ int main(int argc, const char **argv)
                 add_record(file.c_str(), "output.csv", fields, 3);
             }
         else
-            assert(false, "Musisz podać folder albo plik");
+            assert(false, L"Musisz podać folder albo plik");
     }
     catch (CustomError)
     {
@@ -62,11 +62,11 @@ int main(int argc, const char **argv)
     return 0;
 }
 
-void assert(bool assertion, string msg)
+void assert(bool assertion, const wchar_t *msg)
 {
     if (!assertion)
     {
-        MessageBox(NULL, TEXT(msg.c_str()), TEXT("Error"), MB_OK);
+        MessageBoxW(NULL, msg, L"Błąd", MB_OK);
         throw CustomError::ASSERTION_ERROR;
     }
 }
