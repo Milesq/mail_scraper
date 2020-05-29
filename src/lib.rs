@@ -6,7 +6,10 @@ use std::{
     slice,
 };
 
+const CONFIG_SERVER_PORT: &str = "34567";
+
 type CPtrStr = *const c_char;
+mod config_server;
 
 #[no_mangle]
 pub unsafe extern "C" fn add_record(

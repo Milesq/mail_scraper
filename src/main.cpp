@@ -18,6 +18,7 @@ typedef const char *str;
 extern "C"
 {
     void add_record(str code, str file_output, const str *fields, int length);
+    void config();
 }
 
 enum CustomError
@@ -32,11 +33,17 @@ string read_file(string path);
 
 int main(int argc, const char **argv)
 {
+    if (argc == 1)
+    {
+        config();
+        return 0;
+    }
+
     str fields[3] = {"E-mail", "Telefon", "Imię i Nazwisko"};
 
     try
     {
-        assert(argc == 2, L"Program został uruchomiony nieprawidłowo\n\nPrzenieś ikonkę folderu na aplikację");
+        assert(argc >= 2, L"Program został uruchomiony nieprawidłowo\n\nPrzenieś ikonkę folderu na aplikację");
         string dir = argv[1];
         assert(fs::exists(dir), L"Podany folder nie istnieje");
 
