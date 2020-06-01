@@ -80,8 +80,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "99e7b308464d16b56eba9964e4972a3eee817760ab60d88c3f86e1fecb08204c"
 
 [[package]]
+name = "web_server"
+version = "0.4.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "720326ab28ca0ce35d30275de9d8a4b084399247a54d426844a040ae2ab66682"
+
+[[package]]
 name = "xlsx_scraper"
 version = "0.1.0"
 dependencies = [
  "csv",
+ "web_server",
 ]
