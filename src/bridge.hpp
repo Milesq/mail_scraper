@@ -5,7 +5,7 @@ typedef void (*CB)();
 
 extern "C"
 {
-    void add_record(str code, str file_output, const str *fields, int length);
+    void add_record(str code, str file_output, str fields[], int length);
     void config(CB);
 }
 
