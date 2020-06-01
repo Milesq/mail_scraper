@@ -1,17 +1,6 @@
-#include <windows.h>
-#include <fstream>
-
-#if __has_include(<filesystem>)
-#include <filesystem>
-namespace fs = std::filesystem;
-#elif __has_include(<experimental/filesystem>)
-#include <experimental/filesystem>
-namespace fs = std::experimental::filesystem;
-#else
-#error "Missing <filesystem>"
-#endif
-
 #include "bridge.hpp"
+#include "filesystem.hpp"
+#include "helpers.hpp"
 
 using namespace std;
 
@@ -22,24 +11,8 @@ public:
     string *fields;
     unsigned int fieldsCount;
 
-    Config(string path)
-    {
-        this->fields = new string[3];
-        this->fieldsCount = 3;
-        this->outputFileName = "output.csv";
-    }
+    Config(string path);
 };
-
-enum CustomError
-{
-    ASSERTION_ERROR,
-    FILE_ERROR,
-    CONFIG_SERVER_CLOSE
-};
-
-void assert(bool, const wchar_t *msg);
-void add_record(string);
-string read_file(string path);
 
 int main(int argc, const char **argv)
 {
@@ -84,28 +57,9 @@ int main(int argc, const char **argv)
     return 0;
 }
 
-void assert(bool assertion, const wchar_t *msg)
+Config::Config(string path)
 {
-    if (!assertion)
-    {
-        MessageBoxW(NULL, msg, L"Błąd", MB_OK);
-        throw CustomError::ASSERTION_ERROR;
-    }
-}
-
-string read_file(string path)
-{
-    ifstream f(path);
-    string str;
-    if (f.good())
-    {
-        f.seekg(0, ios::end);
-        size_t len = f.tellg();
-        f.seekg(0);
-        string content(len + 1, '\0');
-        f.read(&content[0], len);
-        f.close();
-        return content;
-    }
-    throw CustomError::FILE_ERROR;
+    this->fields = new string[3];
+    this->fieldsCount = 3;
+    this->outputFileName = "output.csv";
 }

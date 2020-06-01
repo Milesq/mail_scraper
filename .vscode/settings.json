@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.html": "html",
+        "filesystem": "cpp",
+        "xstring": "cpp"
+    }
+}
