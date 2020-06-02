@@ -1,7 +1,16 @@
 use csv::{Reader, Writer};
-use std::path::Path;
+use std::{fs::File, io::Write, path::Path};
 
 mod parse_data;
+
+fn log(s: &'static str) -> ! {
+    File::create("error.log")
+        .unwrap()
+        .write_all(s.as_bytes())
+        .unwrap();
+
+    panic!(s);
+}
 
 pub fn add_record(code: &str, file_output: &str, fields: &[String]) -> csv::Result<()> {
     if !Path::new(file_output).exists() {
@@ -11,9 +20,14 @@ pub fn add_record(code: &str, file_output: &str, fields: &[String]) -> csv::Resu
     }
 
     let existing_data = get_existing(file_output).expect("Nieprawidłowy zapis danych w pliku");
-
     let data = parse_data::parse_data(code.to_string()).expect("Nieprawidłowy zapis danych");
-    let fields_data: Vec<_> = fields.iter().map(|key| data.get(key).unwrap()).collect();
+    let fields_data: Vec<_> = fields
+        .iter()
+        .map(|key| {
+            data.get(key)
+                .unwrap_or_else(|| log("Brak wskazanego pola w mailu"))
+        })
+        .collect();
 
     let mut writer = Writer::from_path(file_output)?;
     writer.write_record(fields)?;

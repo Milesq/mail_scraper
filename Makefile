@@ -2,7 +2,7 @@ EXE = add_records.exe
 BIN = build
 
 CC = g++
-CC_ARGS = -std=c++17 -Wall -lstdc++fs
+CC_ARGS = -std=c++17 -Wall -lstdc++fs -Iinipp/inipp/
 
 DLL_DIR = debug
 
@@ -17,11 +17,13 @@ endif
 all: clear src/main.cpp target/$(DLL_DIR)/add_record.dll
 	$(CC) src/main.cpp -Ltarget/$(DLL_DIR) -ladd_record -o $(BIN)/$(EXE) $(CC_ARGS)
 	cp target\$(DLL_DIR)\add_record.dll $(BIN)
+	cp add_record_config.ini build
 	$(BIN)/$(EXE)
 
 build: clear src/main.cpp target/$(DLL_DIR)/add_record.dll
 	$(CC) src/main.cpp -Ltarget/$(DLL_DIR) -ladd_record -o $(BIN)/$(EXE) $(CC_ARGS)
 	cp target\$(DLL_DIR)\add_record.dll $(BIN)
+	cp add_record_config.ini build
 
 target/$(DLL_DIR)/add_record.dll: src/*.rs
 	cargo build $(CARGO_FLAG)

@@ -1,5 +1,6 @@
 #include <windows.h>
 #include <fstream>
+#include <vector>
 
 #ifndef __HELPERS
 #define __HELPERS
@@ -36,6 +37,24 @@ string read_file(string path)
         return content;
     }
     throw CustomError::FILE_ERROR;
+}
+
+vector<string> split(string str, string delim = " ")
+{
+    vector<string> tokens;
+    char *str_c = strdup(str.c_str());
+    char *token = NULL;
+
+    token = strtok(str_c, delim.c_str());
+    while (token != NULL)
+    {
+        tokens.push_back(string(token));
+        token = strtok(NULL, delim.c_str());
+    }
+
+    delete[] str_c;
+
+    return tokens;
 }
 
 #endif
