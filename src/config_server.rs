@@ -1,5 +1,15 @@
 use std::{env, process::Command, thread, time::Duration};
-use web_server::{HttpCode, Request, Response};
+use web_server::Request;
+
+macro_rules! exe_dir {
+    () => {
+        env::current_exe()
+            .expect("Cannot find current exe")
+            .parent()
+            .unwrap()
+            .to_path_buf()
+    };
+}
 
 #[no_mangle]
 pub extern "C" fn config(on_close: extern "C" fn()) {
@@ -12,7 +22,15 @@ pub extern "C" fn config(on_close: extern "C" fn()) {
     }
 
     web_server::new()
-        .get("/", Box::new(|_, _| "asd".into()))
+        .get(
+            "/",
+            Box::new(|_, _| {
+                let mut path = exe_dir!();
+                path.push("./static/index.html");
+
+                path.as_path().into()
+            }),
+        )
         .get(
             "/close",
             Box::new(move |_, _| {
