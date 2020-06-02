@@ -8,7 +8,7 @@ pub fn parse_data(data: String) -> Option<HashMap<String, String>> {
     for line in data.lines() {
         let line = line.trim();
 
-        if line.trim().ends_with(":") {
+        if line.trim().ends_with(':') {
             current_field_name = Some(line.get(..line.len() - 1)?);
             result.insert(current_field_name?.to_string(), "".to_string());
         } else if let Some(field_name) = current_field_name {

@@ -12,6 +12,7 @@ type CPtrStr = *const c_char;
 mod config_server;
 
 #[no_mangle]
+#[allow(clippy::missing_safety_doc)]
 pub unsafe extern "C" fn add_record(
     code: CPtrStr,
     file_output: CPtrStr,
