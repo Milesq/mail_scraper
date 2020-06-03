@@ -1,5 +1,6 @@
 EXE = add_records.exe
-BIN = build
+DIST = build
+INI_FILE = add_record_config.ini
 
 CC = g++
 CC_ARGS = -std=c++17 -Wall -lstdc++fs -Iinipp/inipp/
@@ -14,18 +15,29 @@ else
 	CC_ARGS += -DDEBUG_ASSERTION
 endif
 
-all: clear build src/main.cpp target/$(DLL_DIR)/add_record.dll
-	$(BIN)/$(EXE)
+build: dist-dir $(DIST)/add_record.dll $(DIST)/$(EXE) $(DIST)/static build/$(INI_FILE)
 
-build: clear src/main.cpp target/$(DLL_DIR)/add_record.dll
-	$(CC) src/main.cpp -Ltarget/$(DLL_DIR) -ladd_record -o $(BIN)/$(EXE) $(CC_ARGS)
-	cp target\$(DLL_DIR)\add_record.dll $(BIN)
-	cp add_record_config.ini build
-	cp -r static build
+run: build
+	@echo Running...\n
+	@$(DIST)/$(EXE)
 
-target/$(DLL_DIR)/add_record.dll: src/*.rs
+$(DIST)/$(EXE): src/*.cpp src/*.hpp
+	@echo g++ ...
+	@$(CC) src/main.cpp -L$(DIST) -ladd_record -o $(DIST)/$(EXE) $(CC_ARGS)
+
+$(DIST)/add_record.dll: src/*.rs
 	cargo build $(CARGO_FLAG)
+	@echo Copy dll file
+	@cp target\$(DLL_DIR)\add_record.dll $(DIST)/add_record.dll
 
-clear:
-	rm -rf $(BIN)
-	mkdir $(BIN)
+$(DIST)/static: static/*
+	@echo copy www
+	@rm -rf $(DIST)/static
+	@cp -r static build
+
+build/$(INI_FILE): add_record_config.ini
+	@echo ini file
+	@cp -p add_record_config.ini $(DIST)/$(INI_FILE)
+
+dist-dir:
+	@mkdir -p $(DIST)
