@@ -4,13 +4,23 @@
     <meta charset="UTF-8" />
     <title>Ustawienia konwertera formularzy</title>
     <meta name="author" content="Miłosz Wiśniewski & Jakub Stefaniak" />
+    <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
-    <form action="/save" method="POST">
+    {error}
+    <form name="mainform" action="/save" method="POST" class="main-form">
       <label for="output_filename">Nazwa pliku wyjściowego</label>
-      <input type="text" name="output_filename" />
-      <input type="reset" />
+      <input type="text" name="output_filename" value="{output_filename}" />
+
+      <label for="fields">Pola które mają zostać wydobyte</label>
+      <textarea name="fields" id="fields" cols="30" rows="10">
+{{ for field in fields }}{field}, {{ endfor }}
+      </textarea>
+
+      <button type="submit">Zapisz</button>
     </form>
+
+    <script src="main.js"></script>
   </body>
 </html>
