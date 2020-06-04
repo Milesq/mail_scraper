@@ -25,7 +25,7 @@ $(DIST)/$(EXE): src/*.cpp src/*.hpp
 	@echo g++ ...
 	@$(CC) src/main.cpp -L$(DIST) -ladd_record -o $(DIST)/$(EXE) $(CC_ARGS)
 
-$(DIST)/add_record.dll: src/**/*.rs
+$(DIST)/add_record.dll: src/*.rs src/**/*.rs
 	cargo build $(CARGO_FLAG)
 	@echo Copy dll file
 	@cp target\$(DLL_DIR)\add_record.dll $(DIST)/add_record.dll
