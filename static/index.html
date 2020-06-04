@@ -9,17 +9,19 @@
 
   <body>
     {error}
-    <form name="mainform" action="/save" method="POST" class="main-form">
-      <label for="output_filename">Nazwa pliku wyjściowego</label>
-      <input type="text" name="output_filename" value="{output_filename}" />
+      <form name="mainform" action="/save" method="POST" class="main-form">
+        <label for="output_filename">Nazwa pliku wyjściowego</label>
 
-      <label for="fields">Pola które mają zostać wydobyte</label>
-      <textarea name="fields" id="fields" cols="30" rows="10">
-{{ for field in fields }}{field}, {{ endfor }}
-      </textarea>
+        <input type="text" name="output_filename" value="{output_filename}" />
 
-      <button type="submit">Zapisz</button>
-    </form>
+        <label for="fields">Pola które mają zostać wydobyte</label>
+        <textarea name="fields" id="fields" cols="30" rows="10">
+{{ for field in fields }}{field},{{ endfor }}
+        </textarea>
+
+        <button>Zapisz</button>
+        <button type="button" id="close-button">Zamknij program</button>
+      </form>
 
     <script src="main.js"></script>
   </body>

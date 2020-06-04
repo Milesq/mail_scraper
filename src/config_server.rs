@@ -27,7 +27,7 @@ pub extern "C" fn config(on_close: extern "C" fn()) {
     }
 
     web_server::new()
-        .get(
+        .any(
             "/",
             Box::new(move |_, mut resp: Response| {
                 let index = get_index_html();
@@ -40,9 +40,9 @@ pub extern "C" fn config(on_close: extern "C" fn()) {
                 }
             }),
         )
-        .get("/index.html", redirect("/"))
+        .any("/index.html", redirect("/"))
         .post("/save", Box::new(save_data::save))
-        .get(
+        .any(
             "/close",
             Box::new(move |_, _| {
                 thread::spawn(move || {
