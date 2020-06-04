@@ -14,3 +14,4 @@ web_server = { git = "https://github.com/Milesq/web_server" }
 rust-ini = "0.15.2"
 serde = { version = "1.0.111", features = ["derive"] }
 tinytemplate = "1.1.0"
+urlencoding = "1.0.0"

@@ -10,6 +10,8 @@ const CONFIG_SERVER_PORT: i32 = 34567;
 
 type CPtrStr = *const c_char;
 mod config_server;
+mod file_path;
+use file_path::file;
 
 #[no_mangle]
 #[allow(clippy::missing_safety_doc)]

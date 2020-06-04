@@ -39,7 +39,7 @@ int main(int argc, const char **argv)
 
         auto sections = ini.sections[""];
 
-        str outputFileName = sections["output_file_name"].c_str();
+        str outputFileName = sections["output_filename"].c_str();
         vector<string> string_fields = split(sections["fields"], ",");
 
         vector<str> fields;

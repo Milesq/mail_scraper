@@ -1,18 +1,21 @@
-use std::{fs::read_to_string, env};
-use web_server::{Request, Response};
+use ini::Ini;
+use std::path::Path;
+use web_server::{decoders::x_www_form_urlencoded, Request, Response};
 
 pub fn save(req: Request, _: Response) -> Response {
-    println!("{:#?}", req);
+    let mut body = req.get_body();
+    body = urlencoding::decode(&body).unwrap();
+    let body = x_www_form_urlencoded(&body);
 
-    let mut path = env::current_exe()
-            .expect("Cannot find current exe")
-            .parent()
-            .unwrap()
-            .to_path_buf();
+    let mut ini = Ini::new();
+    ini.with_section::<String>(None)
+        .set(
+            "output_filename",
+            body.get("output_filename").unwrap().as_str(),
+        )
+        .set("fields", body.get("fields").unwrap().as_str());
 
-    path.push("./static/saved.html");
-    let path = path.to_str().unwrap();
-    let file = read_to_string(path);
+    ini.write_to_file(crate::file("add_record_config.ini")).expect("Nie można zapisać pliku INI");
 
-    file.unwrap().into()
+    Path::new(&crate::file("./static/saved.html")).into()
 }

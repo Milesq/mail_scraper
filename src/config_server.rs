@@ -1,20 +1,10 @@
 use ini::Ini;
 use serde::Serialize;
-use std::{env, fs::read_to_string, process::Command, thread, time::Duration};
+use std::{fs::read_to_string, path::Path, process::Command, thread, time::Duration};
 use tinytemplate::TinyTemplate;
 use web_server::{utils::redirect, HttpCode, Request, Response};
 
 mod save_data;
-
-macro_rules! exe_dir {
-    () => {
-        env::current_exe()
-            .expect("Cannot find current exe")
-            .parent()
-            .unwrap()
-            .to_path_buf()
-    };
-}
 
 #[no_mangle]
 pub extern "C" fn config(on_close: extern "C" fn()) {
@@ -54,24 +44,21 @@ pub extern "C" fn config(on_close: extern "C" fn()) {
             }),
         )
         .not_found(Box::new(|req: Request, _| {
-            let mut path = exe_dir!();
-            path.push(format!("./static{}", req.get_path()));
+            let path = format!("./static{}", req.get_path());
+            let path = crate::file(path.as_str());
 
-            path.as_path().into()
+            Path::new(&path).into()
         }))
         .launch(crate::CONFIG_SERVER_PORT);
 }
 
 fn get_index_html() -> Result<String, tinytemplate::error::Error> {
-    let mut path = exe_dir!();
-    path.push("./static/index.html");
-    let path = path.to_str().unwrap();
-    let index = read_to_string(path).expect("Cannot find index.html");
+    let index = read_to_string(crate::file("./static/index.html")).expect("Cannot find index.html");
 
     let mut tpl = TinyTemplate::new();
     tpl.add_template("index", index.as_str())?;
 
-    let variables = SetupContent::from_ini("add_record_config.ini");
+    let variables = SetupContent::from_ini(&crate::file("add_record_config.ini"));
 
     let html = tpl.render("index", &variables)?;
 
@@ -101,15 +88,13 @@ impl SetupContent {
     }
 
     fn from_ini_raw(path: &str) -> Result<Self, ini::ini::Error> {
-        let mut abs_path = exe_dir!();
-        abs_path.push(path);
-        let abs_path = abs_path.to_str().unwrap();
+        let abs_path = crate::file(path);
 
         let data = Ini::load_from_file(abs_path)?;
         let data = data.section::<String>(None).expect("Zły format pliku .ini");
 
         let output_filename = Some(
-            data.get("output_file_name")
+            data.get("output_filename")
                 .unwrap_or("add_record_config.ini")
                 .to_string(),
         );
