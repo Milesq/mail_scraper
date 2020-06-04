@@ -2,7 +2,7 @@ body {
   display: flex;
   justify-content: center;
 
-  background-image: url('2.jpg');
+  background-image: url('bg.jpg');
   background-position: center;
   background-attachment: fixed;
   background-repeat: no-repeat;
