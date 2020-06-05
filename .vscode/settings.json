@@ -1,3 +1,4 @@
 {
-    "C_Cpp.default.includePath": ["./inipp/inipp"]
+  "C_Cpp.default.includePath": ["./inipp/inipp"],
+  "deno.enable": false
 }

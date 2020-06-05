@@ -1,8 +1,6 @@
 use csv::{Reader, Writer};
 use std::{fs::File, io::Write, path::Path};
 
-mod parse_data;
-
 fn log(s: &'static str) -> ! {
     File::create("error.log")
         .unwrap()
@@ -20,7 +18,7 @@ pub fn add_record(code: &str, file_output: &str, fields: &[String]) -> csv::Resu
     }
 
     let existing_data = get_existing(file_output).expect("Nieprawidłowy zapis danych w pliku");
-    let data = parse_data::parse_data(code.to_string()).expect("Nieprawidłowy zapis danych");
+    let data = parse_mail::parse(code.to_string()).expect("Nieprawidłowy zapis danych");
     let fields_data: Vec<_> = fields
         .iter()
         .map(|key| {

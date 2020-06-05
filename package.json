@@ -1,0 +1,15 @@
+{
+  "name": "f",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "parcel build www/*.html --no-source-maps -d build/static"
+  },
+  "keywords": [],
+  "author": "Milesq <wmilosz88@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4",
+    "parcel-plugin-wasm-pack": "^6.0.0"
+  }
+}

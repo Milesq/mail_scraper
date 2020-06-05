@@ -2,3 +2,5 @@ target/
 build/
 *.txt
 *.csv
+node_modules/
+.cache/

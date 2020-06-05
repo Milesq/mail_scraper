@@ -1,6 +1,9 @@
 use std::collections::HashMap;
 
-pub fn parse_data(data: String) -> Option<HashMap<String, String>> {
+#[cfg(target_arch = "wasm32")]
+use wasm_bindgen::prelude::*;
+
+pub fn parse(data: String) -> Option<HashMap<String, String>> {
     let mut result: HashMap<String, String> = HashMap::new();
 
     let mut current_field_name: Option<&str> = None;
@@ -20,3 +23,16 @@ pub fn parse_data(data: String) -> Option<HashMap<String, String>> {
 
     Some(result)
 }
+
+#[cfg(target_arch = "wasm32")]
+#[global_allocator]
+static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
+
+#[cfg(target_arch = "wasm32")]
+#[wasm_bindgen]
+pub fn greet() -> i32 {
+    89
+}
+
+#[cfg(target_arch = "wasm32")]
+mod utils;
