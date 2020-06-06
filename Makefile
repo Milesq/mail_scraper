@@ -15,7 +15,7 @@ else
 	CC_ARGS += -DDEBUG_ASSERTION
 endif
 
-build: dist-dir $(DIST)/add_record.dll $(DIST)/$(EXE) $(DIST)/static build/$(INI_FILE)
+build: dist-dir $(DIST)/add_record.dll $(DIST)/$(EXE) $(DIST)/static $(DIST)/$(INI_FILE)
 
 run: build
 	@echo Running...\n
@@ -30,13 +30,16 @@ $(DIST)/add_record.dll: src/*.rs src/**/*.rs
 	@echo Copy dll file
 	@cp target\$(DLL_DIR)\add_record.dll $(DIST)/add_record.dll
 
-$(DIST)/static: static/*
-	@echo copy www
+$(DIST)/static: www/* parse-mail/pkg/parse_mail.js
+	@echo making www
 	@rm -rf $(DIST)/static
-	@cp -r static build
+	@npm run build
 
-build/$(INI_FILE): add_record_config.ini
-	@echo ini file
+parse-mail/pkg/parse_mail.js: parse-mail/src/*.rs parse-mail/src/**/*.rs
+	@wasm-pack build parse-mail
+
+$(DIST)/$(INI_FILE): add_record_config.ini
+	@echo Copy ini file
 	@cp -p add_record_config.ini $(DIST)/$(INI_FILE)
 
 dist-dir:
