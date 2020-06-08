@@ -1,5 +1,5 @@
 {
-  "name": "f",
+  "name": "mail-scraper-config-www",
   "version": "1.0.0",
   "description": "",
   "scripts": {
@@ -7,8 +7,5 @@
   },
   "keywords": [],
   "author": "Milesq <wmilosz88@gmail.com>",
-  "license": "ISC",
-  "devDependencies": {
-    "parcel-bundler": "1.12.4"
-  }
+  "license": "ISC"
 }

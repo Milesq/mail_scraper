@@ -11,6 +11,7 @@ ifeq ($(RELEASE),1)
 	DLL_DIR = release
 	CARGO_FLAG = --release
 	CC_ARGS += -mwindows -O3
+	NPM_TARGET = :release
 else
 	CC_ARGS += -DDEBUG_ASSERTION
 endif
@@ -33,7 +34,7 @@ $(DIST)/add_record.dll: src/*.rs src/**/*.rs
 $(DIST)/static: www/* parse-mail/pkg/parse_mail.js
 	@echo making www
 	@rm -rf $(DIST)/static
-	@npm run build
+	@npm run build$(NPM_TARGET)
 
 parse-mail/pkg/parse_mail.js: parse-mail/src/*.rs parse-mail/src/**/*.rs
 	@wasm-pack build parse-mail
@@ -44,3 +45,6 @@ $(DIST)/$(INI_FILE): add_record_config.ini
 
 dist-dir:
 	@mkdir -p $(DIST)
+
+clear:
+	rm -rf .cache build/ dist/ parse-mail/pkg parse-mail/target target/debug target/release

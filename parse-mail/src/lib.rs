@@ -29,9 +29,13 @@ pub fn parse(data: String) -> Option<HashMap<String, String>> {
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 #[cfg(target_arch = "wasm32")]
+use js_sys::Array;
+
+#[cfg(target_arch = "wasm32")]
 #[wasm_bindgen]
-pub fn greet() -> i32 {
-    89
+pub fn parse_mail() -> i32 {
+    // vec![String::from("ok"), String::from("ok23")]
+    809
 }
 
 #[cfg(target_arch = "wasm32")]

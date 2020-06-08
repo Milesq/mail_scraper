@@ -2,6 +2,16 @@ use ini::Ini;
 use std::path::Path;
 use web_server::{decoders::x_www_form_urlencoded, Request, Response};
 
+static SAVEDHTML: &str = "
+  <h2>Dane zapisane</h2>
+
+  <script>
+    setTimeout(() => {
+      location.pathname = '/';
+    }, 300);
+  </script>
+";
+
 pub fn save(req: Request, _: Response) -> Response {
     let mut body = req.get_body();
     body = urlencoding::decode(&body).unwrap();
@@ -15,7 +25,8 @@ pub fn save(req: Request, _: Response) -> Response {
         )
         .set("fields", body.get("fields").unwrap().as_str());
 
-    ini.write_to_file(crate::file("add_record_config.ini")).expect("Nie można zapisać pliku INI");
+    ini.write_to_file(crate::file("add_record_config.ini"))
+        .expect("Nie można zapisać pliku INI");
 
-    Path::new(&crate::file("./static/saved.html")).into()
+    Path::new(SAVEDHTML).into()
 }

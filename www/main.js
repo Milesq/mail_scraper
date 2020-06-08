@@ -1,9 +1,5 @@
-import { greet } from '../parse-mail/pkg/parse_mail';
-
 const fieldsInput = document.getElementById('fields');
 const closeBtn = document.getElementById('close-button');
-
-console.log(greet());
 
 document.forms.mainform.addEventListener('submit', c => {
   fieldsInput.value = fieldsInput.value

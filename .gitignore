@@ -2,5 +2,7 @@ target/
 build/
 *.txt
 *.csv
-node_modules/
+
+dist/
 .cache/
+node_modules/
