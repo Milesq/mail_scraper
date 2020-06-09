@@ -17,15 +17,30 @@ const chunks = (arr, chunkSize) =>
  */
 const parse = str => Object.fromEntries(chunks(wasm.parse_mail(str), 2));
 
-const fieldsInput = document.getElementById('fields');
-const closeBtn = document.getElementById('close-button');
+function addField(name) {
+  document.getElementById('fields').innerHTML += `, ${name}`;
+}
 
-document.forms.mainform.addEventListener('submit', c => {
-  fieldsInput.value = fieldsInput.value
-    .split(',')
-    .map(el => el.trim())
-    .join(',')
-    .slice(0, -1); // Remove last char
+const template = document.getElementById('field-template');
+
+document.getElementById('example-file-input').addEventListener('change', async ev => {
+  const [file] = ev.target.files;
+  const textContent = await file.text();
+  const fields = Object.keys(parse(textContent));
+
+  document.querySelectorAll('.example-doc__fields').forEach(el => {
+    fields.forEach(field => {
+      const currentElement = template.cloneNode(true);
+      currentElement.querySelector('.field-template__field-name').innerHTML = field;
+
+      el.innerHTML += currentElement.innerHTML;
+    });
+
+    el.querySelectorAll('.field-template__action').forEach(el => {
+      el.addEventListener('click', ({ target: { parentElement } }) => {
+        const { innerHTML: fieldName } = parentElement.querySelector('.field-template__field-name');
+        addField(fieldName);
+      });
+    });
+  });
 });
-
-closeBtn.addEventListener('click', () => fetch('/close'));

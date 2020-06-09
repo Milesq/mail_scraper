@@ -4,14 +4,21 @@
     <meta charset="UTF-8" />
     <title>Ustawienia konwertera formularzy</title>
     <meta name="author" content="Miłosz Wiśniewski & Jakub Stefaniak" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.scss" />
   </head>
 
   <body>
     <nav>
       <img src="bg.png" alt="Logo" class="logo" />
     </nav>
-    {error}
+
+    <section class="example-doc">
+      <label for="output_filename">Wgraj przykładowy plik </label>
+      <input type="file" id="example-file-input" />
+
+      <article class="example-doc__fields"></article>
+    </section>
+
     <form name="mainform" action="/save" method="POST" class="main-form">
       <label for="output_filename">Nazwa pliku wyjściowego</label>
 
@@ -27,6 +34,14 @@
       <button type="button" id="close-button">Zamknij program</button>
     </form>
 
+    <div id="field-template">
+      <div class="possible-field">
+        <span class="field-template__field-name"></span>
+        <button class="icon-char field-template__action">&gt;</button>
+      </div>
+    </div>
+
+    <script src="formStaff.js"></script>
     <script src="main.js"></script>
   </body>
 </html>

@@ -1,7 +1,9 @@
 body {
   display: flex;
   justify-content: center;
+}
 
+h3 {
   font-family: Impact, Charcoal, sans-serif;
   font-size: 24px;
   color: rgb(65, 65, 165);
@@ -23,8 +25,22 @@ body {
   max-width: 40vmax;
   background-color: rgb(221, 221, 221);
   width: 80%;
+
+  & > * {
+    margin: 30px 150px;
+  }
 }
 
-.main-form > * {
-  margin: 30px 150px;
+#field-template {
+  display: none;
+}
+
+.icon-char {
+  font-weight: 900;
+}
+
+.possible-field {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 90px;
 }
