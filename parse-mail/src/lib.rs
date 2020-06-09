@@ -37,10 +37,15 @@ use {js_sys::Array, wasm_bindgen::prelude::*};
 #[cfg(target_arch = "wasm32")]
 #[wasm_bindgen]
 pub fn parse_mail(mail: String) -> Array {
-    // let x = Array::new();
+    let parsed_value = parse(mail).unwrap();
+    let mut ret: Vec<JsValue> = Vec::new();
 
-    // x
-    to_arr(vec![JsValue::from_str(&mail), "ok".into()])
+    for (key, val) in parsed_value.iter() {
+        ret.push(key.into());
+        ret.push(val.into());
+    }
+
+    to_arr(ret)
 }
 
 #[cfg(target_arch = "wasm32")]

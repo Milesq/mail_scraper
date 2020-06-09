@@ -1,0 +1,16 @@
+{
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true
+  },
+  "plugins": ["prettier"],
+  "parser": "babel-eslint",
+  "extends": ["eslint:recommended", "prettier"],
+  "rules": {
+    "prettier/prettier": "error",
+    "prefer-const": "warn",
+    "no-unused-vars": "warn",
+    "no-console": "off"
+  }
+}
