@@ -3,6 +3,5 @@ build/
 *.txt
 *.csv
 
-dist/
 .cache/
 node_modules/

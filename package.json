@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "parcel serve www/*.html --no-source-maps",
+    "dev": "parcel serve www/*.html --no-source-maps -d build/static",
     "build": "parcel build www/*.html --no-source-maps -d build/static --no-minify",
     "build:release": "parcel build www/*.html --no-source-maps -d build/static",
     "lint": "eslint www",
