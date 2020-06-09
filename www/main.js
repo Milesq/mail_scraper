@@ -1,12 +1,14 @@
-const fieldsInput = document.getElementById('fields');
-const closeBtn = document.getElementById('close-button');
+import wasm from './parse-mail/pkg/parse_mail';
 
-document.forms.mainform.addEventListener('submit', c => {
-  fieldsInput.value = fieldsInput.value
-    .split(',')
-    .map(el => el.trim())
-    .join(',')
-    .slice(0, -1); // Remove last char
-});
+// const fieldsInput = document.getElementById('fields');
+// const closeBtn = document.getElementById('close-button');
 
-closeBtn.addEventListener('click', () => fetch('/close'));
+// document.forms.mainform.addEventListener('submit', c => {
+//   fieldsInput.value = fieldsInput.value
+//     .split(',')
+//     .map(el => el.trim())
+//     .join(',')
+//     .slice(0, -1); // Remove last char
+// });
+
+// closeBtn.addEventListener('click', () => fetch('/close'));

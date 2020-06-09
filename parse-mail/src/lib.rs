@@ -1,8 +1,5 @@
 use std::collections::HashMap;
 
-#[cfg(target_arch = "wasm32")]
-use wasm_bindgen::prelude::*;
-
 pub fn parse(data: String) -> Option<HashMap<String, String>> {
     let mut result: HashMap<String, String> = HashMap::new();
 
@@ -29,14 +26,30 @@ pub fn parse(data: String) -> Option<HashMap<String, String>> {
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 #[cfg(target_arch = "wasm32")]
-use js_sys::Array;
-
-#[cfg(target_arch = "wasm32")]
-#[wasm_bindgen]
-pub fn parse_mail() -> i32 {
-    // vec![String::from("ok"), String::from("ok23")]
-    809
+#[wasm_bindgen(start)]
+pub fn set_panic_hook() {
+    console_error_panic_hook::set_once();
 }
 
 #[cfg(target_arch = "wasm32")]
-mod utils;
+use {js_sys::Array, wasm_bindgen::prelude::*};
+
+#[cfg(target_arch = "wasm32")]
+#[wasm_bindgen]
+pub fn parse_mail(mail: String) -> Array {
+    // let x = Array::new();
+
+    // x
+    to_arr(vec![JsValue::from_str(&mail), "ok".into()])
+}
+
+#[cfg(target_arch = "wasm32")]
+fn to_arr(rust_vec: Vec<JsValue>) -> Array {
+    let array = Array::new();
+
+    for el in rust_vec {
+        array.push(&el);
+    }
+
+    array
+}
