@@ -47,4 +47,11 @@ dist-dir:
 	@mkdir -p $(DIST)
 
 clear:
-	rm -rf .cache build/ dist/ parse-mail/pkg parse-mail/target target/debug target/release
+	rm -rf \
+		.cache \
+		build/ \
+		dist/ \
+		parse-mail/pkg \
+		parse-mail/target \
+		target/debug \
+		target/release
