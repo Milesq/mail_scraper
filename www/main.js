@@ -18,7 +18,11 @@ const chunks = (arr, chunkSize) =>
 const parse = str => Object.fromEntries(chunks(wasm.parse_mail(str), 2));
 
 function addField(name) {
-  document.getElementById('fields').innerHTML += `, ${name}`;
+  const fieldEl = document.getElementById('fields');
+
+  if (fieldEl.innerHTML.search(name) === -1) {
+    fieldEl.innerHTML += `, ${name}`;
+  }
 }
 
 const template = document.getElementById('field-template');
@@ -29,6 +33,7 @@ document.getElementById('example-file-input').addEventListener('change', async e
   const fields = Object.keys(parse(textContent));
 
   document.querySelectorAll('.example-doc__fields').forEach(el => {
+    el.innerHTML = '';
     fields.forEach(field => {
       const currentElement = template.cloneNode(true);
       currentElement.querySelector('.field-template__field-name').innerHTML = field;
